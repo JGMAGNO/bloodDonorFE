@@ -1,0 +1,132 @@
+<!--
+  ~ Copyright (c) Akveo 2019. All Rights Reserved.
+  ~ Licensed under the Single Application / Multi Application License.
+  ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+  -->
+
+<nb-card>
+  <nb-card-header>{{mode}} user</nb-card-header>
+  <nb-card-body>
+    <div [formGroup]="userForm" class="container">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input nbInput id="firstName" formControlName="firstName"
+               [status]="(firstName?.hasError('minlength') || firstName?.hasError('maxlength')) ? 'danger' : 'primary'"
+               class="form-control" placeholder="Last Name">
+        <ngx-validation-message label="First Name"
+                                [showRequired]="firstName?.errors?.required && firstName.touched" 
+                                [showMinLength]="firstName?.hasError('minlength')"
+                                [showMaxLength]="firstName?.hasError('maxlength')" minLength=3
+                                maxLength=20></ngx-validation-message>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input nbInput id="lastName" formControlName="lastName"
+               [status]="(lastName?.hasError('minlength') || lastName?.hasError('maxlength')) ? 'danger' : 'primary'"
+               class="form-control" placeholder="Last Name">
+        <ngx-validation-message label="Last Name"
+                                [showRequired]="lastName?.errors?.required && lastName.touched"
+                                [showMinLength]="lastName?.hasError('minlength')"
+                                [showMaxLength]="lastName?.hasError('maxlength')" minLength=3
+                                maxLength=20></ngx-validation-message>
+      </div>
+
+      <div class="form-group">
+        <label for="inputLogin">Blood Type</label>
+        <input nbInput id="inputLogin" formControlName="login"
+               [status]="(login?.errors?.required || login?.hasError('minlength') || login?.hasError('maxlength')) && login.touched ? 'danger' : 'primary'"
+               class="form-control" placeholder="Blood Type">
+        <ngx-validation-message label="Blood Type"
+                                [showMinLength]="login?.hasError('minlength')"
+                                [showMaxLength]="login?.hasError('maxlength')"
+                                [showRequired]="login?.errors?.required && login.touched"
+                                minLength=6
+                                maxLength=20></ngx-validation-message>
+      </div>
+
+      <div class="form-group">
+        <label for="inputAge">Age</label>
+        <input nbInput id="inputAge" formControlName="age"
+               [status]="(age?.errors?.required || age?.errors?.min || age?.errors?.max || age?.hasError('pattern')) && age.touched? 'danger' : 'primary'"
+               class="form-control" placeholder="Age">
+        <ngx-validation-message label="Age"
+                                [showMin]="age?.errors?.min && age.touched"
+                                [showMax]="age?.errors?.max && age.touched"
+                                [showRequired]="age?.errors?.required && age.touched"
+                                [showPattern]="age?.hasError('pattern')" min=1 max=120></ngx-validation-message>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail">Cellphone Number</label>
+        <input nbInput id="inputEmail" formControlName="email"
+               [status]="(email?.errors?.required || email?.hasError('pattern')) && email.touched ? 'danger' : 'primary'"
+               class="form-control"
+               placeholder="Cellphone Number">
+        <ngx-validation-message label="Cellphone Number"
+                                [showRequired]="email?.errors?.required && email.touched" min=1 max=120></ngx-validation-message>
+      </div>
+
+      <div class="form-group" formGroupName="address">
+        <label for="inputStreet">House# / Street / Brgy.</label>
+        <input nbInput class="form-control" id="inputStreet" placeholder="House# / Street / Brgy." formControlName="street"
+        [status]="(street?.hasError('minlength') || street?.hasError('maxlength')) ? 'danger' : 'primary'">
+        <ngx-validation-message label="House# / Street / Brgy."
+        [showRequired]="street?.errors?.required && street.touched" min=3 max=120></ngx-validation-message>
+      </div>
+
+      <div class="form-group" formGroupName="address">
+        <label for="inputCity">City and Province</label>
+        <input nbInput class="form-control" id="inputCity" placeholder="City and Province" formControlName="city"
+        [status]="(city?.hasError('minlength') || city?.hasError('maxlength')) ? 'danger' : 'primary'">
+        <ngx-validation-message label="City and Province"
+        [showRequired]="city?.errors?.required && city.touched" min=3 max=120></ngx-validation-message>
+      </div>
+
+      <div class="form-group" formGroupName="address">
+        <label for="inputZipCode">Zip Code</label>
+        <input nbInput class="form-control" id="inputZipCode" placeholder="Zip Code" formControlName="zipCode"
+        [status]="(zipCode?.hasError('minlength') || zipCode?.hasError('maxlength')) ? 'danger' : 'primary'">
+        <ngx-validation-message label="City and Province"
+        [showRequired]="zipCode?.errors?.required && zipCode.touched" min=3 max=120></ngx-validation-message>
+      </div>
+
+      <div class="form-group">
+        <label for="inputZipCode">Medical History</label>
+        <input nbInput class="form-control" id="inputZipCode" placeholder="Medical History, allergies. etc" formControlName="medicalHistory"
+        [status]="(medicalHistory?.hasError('minlength') || medicalHistory?.hasError('maxlength')) ? 'danger' : 'primary'">
+        <ngx-validation-message label="Medical History"
+        [showRequired]="medicalHistory?.errors?.required && medicalHistory.touched" min=3 max=120></ngx-validation-message>
+      </div>
+
+      <nb-card>
+        <nb-card-body class="checkbox-radio">
+          <div class="demo-items">
+            <nb-radio-group [(value)]="radioGroupValue">
+              <nb-radio (valueChange)="onChange($event)"
+                [value]="'1st'" [checked]=true>
+                First Time Donor
+              </nb-radio>
+              <nb-radio (valueChange)="onChange($event)"
+                [value]="'2nd'">
+                Previous Donor
+              </nb-radio>
+            </nb-radio-group>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <div class="form-group" *ngIf="showLast">
+        <label for="formpicker">Date of Last Donation</label><br>
+        <input formControlName="lastDonation" nbInput placeholder="Form Picker" [nbDatepicker]="formpicker">
+        <nb-datepicker #formpicker></nb-datepicker>
+      </div>
+
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="primary" [disabled]="!userForm.valid" (click)="save()" hero>Submit</button>
+    <button nbButton status="info" (click)="back()" hero>Back</button>
+  </nb-card-footer>
+</nb-card>
+
