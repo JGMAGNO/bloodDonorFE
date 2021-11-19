@@ -46,6 +46,14 @@
       </div>
 
       <div class="form-group">
+        <label for="inputZipCode">Medical History</label>
+        <input nbInput class="form-control" id="inputZipCode" placeholder="Medical History, allergies. etc" formControlName="medicalHistory"
+        [status]="(medicalHistory?.hasError('minlength') || medicalHistory?.hasError('maxlength')) ? 'danger' : 'primary'">
+        <ngx-validation-message label="Medical History"
+        [showRequired]="medicalHistory?.errors?.required && medicalHistory.touched" min=3 max=120></ngx-validation-message>
+      </div>
+
+      <div class="form-group">
         <label for="inputAge">Age</label>
         <input nbInput id="inputAge" formControlName="age"
                [status]="(age?.errors?.required || age?.errors?.min || age?.errors?.max || age?.hasError('pattern')) && age.touched? 'danger' : 'primary'"
@@ -89,14 +97,6 @@
         [status]="(zipCode?.hasError('minlength') || zipCode?.hasError('maxlength')) ? 'danger' : 'primary'">
         <ngx-validation-message label="City and Province"
         [showRequired]="zipCode?.errors?.required && zipCode.touched" min=3 max=120></ngx-validation-message>
-      </div>
-
-      <div class="form-group">
-        <label for="inputZipCode">Medical History</label>
-        <input nbInput class="form-control" id="inputZipCode" placeholder="Medical History, allergies. etc" formControlName="medicalHistory"
-        [status]="(medicalHistory?.hasError('minlength') || medicalHistory?.hasError('maxlength')) ? 'danger' : 'primary'">
-        <ngx-validation-message label="Medical History"
-        [showRequired]="medicalHistory?.errors?.required && medicalHistory.touched" min=3 max=120></ngx-validation-message>
       </div>
 
       <nb-card>
